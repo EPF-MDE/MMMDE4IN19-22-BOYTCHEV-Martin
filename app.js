@@ -8,8 +8,12 @@ app.get('/', (req, res) => res.send('Hello World & Alien?!'));
 app.use(express.json());
 
 app.post('/students/create', (req, res) => {
-  console.log(req.body);
+  const csvLine =`\n${req.body.name},${req.body.school}`
+  console.log(csvLine);
   res.send("Student created");
+  fs.writeFile('./students.csv', csvLine, { flag: 'a' }, (err) => {
+    console.log("Added!");
+  });
 });
 
 app.get('/students', (req, res) => {
