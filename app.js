@@ -5,8 +5,15 @@ const fs = require("fs");
 
 app.get('/', (req, res) => res.send('Hello World & Alien?!'));
 
+app.use(express.json());
+
+app.post('/students/create', (req, res) => {
+  console.log(req.body);
+  res.send("Student created");
+});
+
 app.get('/students', (req, res) => {
-  const rowSeparator = "\n";
+  const rowSeparator = "\r\n";
   const cellSeparator = ",";
   fs.readFile('./students.csv', 'utf8', (err, data) => {
     console.log("Contenu de students.csv :");
