@@ -4,8 +4,40 @@ const port = 3000;
 const fs = require("fs");
 const path = require("path");
 
+app.set('views', './views'); 
+app.set('view engine', 'ejs');
+
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, "./views/home.html")));
-app.get('/', (req, res) => res.send('Hello World & Alien?!'));
+//app.get('/', (req, res) => res.send('Hello World & Alien?!'));
+
+app.get('/students', (req, res) => {
+  const rowSeparator = "\r\n";
+  const cellSeparator = ",";
+  fs.readFile('./students.csv', 'utf-8', (err, data) => {
+    if (err) {
+      console.error("Erreur lors de la lecture du fichier students.csv :", err);
+      res.status(500).send("Erreur lors de la lecture du fichier students.csv");
+      return;
+    }
+    console.log("Contenu de students.csv :");
+    console.log(data);
+
+    const rows = data.split(rowSeparator);
+    const [headerRow, ...contentRows] = rows;
+    const header = headerRow.split(cellSeparator);
+
+    const students = contentRows.map((row) => {
+      const cells = row.split(cellSeparator);
+      const student = {
+        [header[0]]: cells[0],
+        [header[1]]: cells[1],
+      };
+      return student;
+    });
+    res.render("students", { students });
+  });
+});
+
 
 app.use(express.json());
 
@@ -21,7 +53,7 @@ app.post('/api/students/create', (req, res) => {
 app.get('/api/students', (req, res) => {
   const rowSeparator = "\r\n";
   const cellSeparator = ",";
-  fs.readFile('./students.csv', 'utf8', (err, data) => {
+  fs.readFile('./students.csv', 'utf-8', (err, data) => {
     console.log("Contenu de students.csv :");
     console.log(data);
 
