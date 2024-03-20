@@ -1,9 +1,13 @@
 body {
-    background-color: #008080; 
-    text-align: center;
+    background-color: #008080;
+  }
+  h1 {
     max-width: 800px;
-}
-h1 {
-    color: #000000;
-}
-
+    margin: auto;
+  }
+  
+  @media (max-width: 800px) {
+    p.long-text {
+      display: none;
+    }
+  }
