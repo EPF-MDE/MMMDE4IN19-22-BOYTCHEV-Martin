@@ -3,7 +3,14 @@ const app = express();
 const port = 3000;
 const fs = require("fs");
 const path = require("path");
+const basicAuth = require("express-basic-auth");
 
+app.use(
+  basicAuth({
+    users: { [process.env.ADMIN_USERNAME]: process.env.ADMIN_PASSWORD},
+    challenge: true,
+  })
+);
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.set("views", "./views"); 
