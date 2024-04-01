@@ -4,13 +4,53 @@ const port = 3000;
 const fs = require("fs");
 const path = require("path");
 const basicAuth = require("express-basic-auth");
+const bcrypt = require('bcrypt');
 
-app.use(
-  basicAuth({
-    users: { [process.env.ADMIN_USERNAME]: process.env.ADMIN_PASSWORD},
-    challenge: true,
-  })
-);
+const Authorizer = async (username, password, callback) => {
+  fs.readFile('./users.csv', 'utf-8', (err, data) => {
+    if (err) {
+      console.error('Erreur lors de la lecture de users.csv :', err);
+      return callback(null, false);
+    }
+    console.log(password)
+    const lignes = data.trim().split('\n');
+
+    for (let i = 0; i < lignes.length; i++) {
+      const ligne = lignes[i];
+      const [user, EncryptedPassword] = ligne.split(',').map(str => str.trim());
+      console.log(EncryptedPassword)
+      if (user.trim() === username) {
+        bcrypt.compare(password, EncryptedPassword, (err, result) => {
+          if (err) {
+            console.error('Erreur lors de la comparaison des mots de passe :', err);
+            return callback(null, false);
+          }
+          if (result) {
+            console.log('Autorisation reussie');
+            return callback(null, true);
+          } else {
+            console.log('Autorisation echouee');
+            return callback(null, false);
+          }
+        });
+        return;
+      }
+    }
+
+    console.log('Utilisateur non trouvé');
+    callback(null, false);
+  });
+};
+
+
+
+
+app.use(basicAuth({
+  authorizer: Authorizer,
+  challenge: true,
+  authorizeAsync: true,
+}));
+
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.set("views", "./views"); 
