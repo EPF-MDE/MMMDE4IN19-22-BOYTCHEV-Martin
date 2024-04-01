@@ -5,6 +5,8 @@ const fs = require("fs");
 const path = require("path");
 const basicAuth = require("express-basic-auth");
 const bcrypt = require('bcrypt');
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 
 const Authorizer = async (username, password, callback) => {
   fs.readFile('./users.csv', 'utf-8', (err, data) => {
@@ -101,6 +103,18 @@ app.post("/students/create", (req, res) => {
 });
 
 app.use(express.json());
+
+app.post("/api/login", (req, res) => {
+  console.log("current cookies:", req.cookies);
+  const token = "FOOBAR";
+  const tokenCookie = {
+    path: "/",
+    httpOnly: true,
+    expires: new Date(Date.now() + 60 * 60 * 1000),
+  };
+  res.cookie("auth-token", token, tokenCookie);
+  res.send("OK");
+});
 
 app.post("/api/students/create", (req, res) => {
   const csvLine =`\n${req.body.name},${req.body.school}`
