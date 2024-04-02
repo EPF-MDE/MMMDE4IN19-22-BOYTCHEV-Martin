@@ -81,6 +81,9 @@ app.get("/students", (req, res) => {
   });
 });
 
+app.get("/students/data", (req, res) => {
+  res.render("students_data");
+});
 
 app.get("/students/create", (req, res) => {
   res.render("create-student");
