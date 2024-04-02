@@ -19,7 +19,6 @@ const Authorizer = async (username, password, callback) => {
     for (let i = 0; i < lignes.length; i++) {
       const ligne = lignes[i];
       const [user, EncryptedPassword] = ligne.split(',').map(str => str.trim());
-      console.log(EncryptedPassword)
       if (user.trim() === username) {
         bcrypt.compare(password, EncryptedPassword, (err, result) => {
           if (err) {
