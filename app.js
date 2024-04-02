@@ -14,7 +14,6 @@ const Authorizer = async (username, password, callback) => {
       console.error('Erreur lors de la lecture de users.csv :', err);
       return callback(null, false);
     }
-    console.log(password)
     const lignes = data.trim().split('\n');
 
     for (let i = 0; i < lignes.length; i++) {
@@ -24,14 +23,14 @@ const Authorizer = async (username, password, callback) => {
       if (user.trim() === username) {
         bcrypt.compare(password, EncryptedPassword, (err, result) => {
           if (err) {
-            console.error('Erreur lors de la comparaison des mots de passe :', err);
+            console.error('Error :', err);
             return callback(null, false);
           }
           if (result) {
-            console.log('Autorisation reussie');
+            console.log('Successful');
             return callback(null, true);
           } else {
-            console.log('Autorisation echouee');
+            console.log('Failed');
             return callback(null, false);
           }
         });
@@ -39,13 +38,10 @@ const Authorizer = async (username, password, callback) => {
       }
     }
 
-    console.log('Utilisateur non trouvé');
+    console.log('User not found');
     callback(null, false);
   });
 };
-
-
-
 
 app.use(basicAuth({
   authorizer: Authorizer,
