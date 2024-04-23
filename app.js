@@ -7,11 +7,22 @@ const basicAuth = require("express-basic-auth");
 const bcrypt = require('bcrypt');
 const cookieParser = require("cookie-parser");
 const mongoose = require('mongoose');
-const Student = require('../models/Student');
+const Student = require("./models/Student");
 
 app.use(cookieParser());
 
-mongoose.connect(' mongodb://localhost:27017/epfbook ');
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/epfbook', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Check connection
+const db = mongoose.connection;
+db.once('open', () => console.log('Connected to MongoDB'));
+db.on('error', err => console.error('MongoDB connection error:', err));
+
+module.exports = db;
 
 const Authorizer = async (username, password, callback) => {
   fs.readFile('./users.csv', 'utf-8', (err, data) => {
