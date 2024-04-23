@@ -6,7 +6,12 @@ const path = require("path");
 const basicAuth = require("express-basic-auth");
 const bcrypt = require('bcrypt');
 const cookieParser = require("cookie-parser");
+const mongoose = require('mongoose');
+const Student = require('../models/Student');
+
 app.use(cookieParser());
+
+mongoose.connect(' mongodb://localhost:27017/epfbook ');
 
 const Authorizer = async (username, password, callback) => {
   fs.readFile('./users.csv', 'utf-8', (err, data) => {
@@ -144,6 +149,27 @@ app.get("/api/students", (req, res) => {
     });
     res.send(students);
   });
+});
+
+app.post('/students/create-in-db', async (req, res) => {
+  try {
+    const { name, school } = req.body;
+    const student = new Student({ name, school });
+    await student.save();
+    res.status(201).json({ message: 'Student created successfully', student });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create student', details: error.message });
+  }
+});
+
+app.get('/from-db', async (req, res) => {
+  try {
+    const students = await Student.find();
+    res.json(students);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 app.listen(port, () => console.log(`Example app listening on http://localhost:${port}`)); 
