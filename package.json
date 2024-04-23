@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "echo": "echo 'HELLO'",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "docker": "docker run -d -p 27017:27017 mongo"
   },
   "author": "",
   "license": "ISC",
