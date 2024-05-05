@@ -183,4 +183,40 @@ app.get('/from-db', async (req, res) => {
   }
 });
 
+app.get('/students/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+
+  fs.readFile('./students.csv', 'utf-8', (err, data) => {
+      if (err) {
+          console.error('Erreur lors de la lecture de students.csv :', err);
+          return res.status(500).send('Erreur interne du serveur');
+      }
+
+      const lignes = data.trim().split('\n');
+
+      // Vérifier si l'ID est valide
+      if (id < 0 || id >= lignes.length) {
+          return res.status(404).send('Étudiant non trouvé');
+      }
+
+      // Séparer les lignes non vides ou non valides
+      const etudiantLigne = lignes[id];
+      if (!etudiantLigne) {
+          return res.status(404).send('Étudiant non trouvé');
+      }
+
+      // Séparer les informations de l'étudiant
+      const infosEtudiant = etudiantLigne.split(',').map(str => str.trim());
+      if (infosEtudiant.length !== 2) {
+          return res.status(404).send('Étudiant non trouvé');
+      }
+
+      const student = { name: infosEtudiant[0], school: infosEtudiant[1] };
+
+      // Rendre la vue student_details avec les données d'étudiant
+      res.render('student_details', { student });
+  });
+});
+
+
 app.listen(port, () => console.log(`Example app listening on http://localhost:${port}`)); 
