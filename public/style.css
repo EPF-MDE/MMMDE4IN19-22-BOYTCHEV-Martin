@@ -1,14 +1,47 @@
 body {
-    background-color: #008080;
-    text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  position: relative;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://www.epf.fr/sites/default/files/styles/image_100_/public/2022-04/forum_ouvert_1.png?itok=1ty3ZXZH');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.2;
+  z-index: -1; 
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+  max-width: 800px;
+  margin: auto;
+}
+
+form {
+  margin-top: 20px;
+}
+
+@media (max-width: 800px) {
+      p.long-text {
+    display: none;
   }
-  h1 {
-    max-width: 800px;
-    margin: auto;
-  }
-  
-  @media (max-width: 800px) {
-    p.long-text {
-      display: none;
-    }
-  }
+}

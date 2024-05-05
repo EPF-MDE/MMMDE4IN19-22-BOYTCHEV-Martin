@@ -1,1 +1,49 @@
-Martin BOYTCHEV
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://www.epf.fr/sites/default/files/styles/image_100_/public/2022-04/forum_ouvert_1.png?itok=1ty3ZXZH'); /* Assurez-vous que le nom du fichier correspond à votre image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            opacity: 0.9; 
+        }
+        .content {
+            padding: 50px;
+            background-color: rgba(255, 255, 255, 0.8); 
+            border-radius: 10px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Welcome on our website</h1>
+        <div>
+            <button onclick="window.location.href='http://localhost:3000/students'">List of students</button>
+            <button onclick="window.location.href='http://localhost:3000/students/create'">Add a student</button>
+            <button onclick="window.location.href='http://localhost:3000/students/data'">Data about student</button>
+        </div>
+    </div>
+</body>
+</html>
