@@ -9,22 +9,41 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             stressBustersCount[stressBusterName]+=1;
         });
-        console.log(stressBustersCount);
 
-        const counts = Object.values(stressBustersCount)
-        const categories =Object.keys(stressBustersCount)
+        const sortedStressBusters = Object.keys(stressBustersCount).sort((a, b) => stressBustersCount[b] - stressBustersCount[a]).slice(0, 5);
+        const stressBustersData = sortedStressBusters.map((name) => [name, stressBustersCount[name]]);
 
         const chart = c3.generate({
             bindto: '#chart',
             data: {
-                columns: [["Stress busters", ...counts]],
+                columns: [["Stress busters", ...stressBustersData.map(item => item[1])]],
                 type: "bar",
             },
             axis: {
                 x: {
                     type: "category",
-                    categories: categories,
+                    categories: stressBustersData.map(item => item[0]),
                 },
+            },
+        });
+
+        const healthIssuesCount = {};
+
+        data.forEach((row) => {
+            const healthIssue = row["Health issue during lockdown"];
+            if (typeof healthIssuesCount[healthIssue] === "undefined") {
+                healthIssuesCount[healthIssue] = 0;
+            }
+            healthIssuesCount[healthIssue] += 1;
+        });
+
+        const healthIssuesData = Object.entries(healthIssuesCount);
+
+        const pieChart = c3.generate({
+            bindto: '#pie',
+            data: {
+                columns: healthIssuesData,
+                type: 'pie',
             },
         });
     });
