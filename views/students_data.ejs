@@ -1,16 +1,27 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Students_Data</title>
+    <title>Students Data</title>
     <link rel="stylesheet" href="/style.css" />
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.css">
 </head>
 <body>
-    <div id="chart"></div>
-    <script src="/students-data.js"></script>
-    <div id="pie"></div>
-    <script src="/students-data.js"></script>
+    <h1>Students Data</h1>
+
+    <div>
+        <h2>TOP 5 stress busters</h2>
+        <div id="chart"></div>
+        <script src="/students-data.js"></script>
+    </div>
+
+    <div>
+        <h2>Proportion of Healthcare issue during the lockdown</h2>
+        <div id="pie"></div>
+        <script src="/students-data.js"></script>
+    </div>
+
     <div style="position: fixed; bottom: 40px; right: 40px;">
         <button onclick="window.location.href='http://localhost:3000/'">Back</button>
     </div>
