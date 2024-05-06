@@ -7,3 +7,13 @@ There are several fonctionalities in this social website:
 - You can see the details of each student and modify their information 
 - You can also see data about students such as what were their stress busters during the lockdown or if they had some health issues
 
+Now lets see how you can use this application on o-your own laptop
+
+## Installation
+
+First you have to clone the folder on git to do this you have to go in your terminal and you use this :
+
+```
+git clone https://github.com/EPF-MDE/MMMDE4IN19-22-BOYTCHEV-Martin.git
+
+```
