@@ -29,7 +29,7 @@ const Authorizer = async (username, password, callback) => {
   //read the users.csv file to check credentials
   fs.readFile('./users.csv', 'utf-8', (err, data) => {
     if (err) {
-      //handle errors reading the file
+      //see if there is error
       console.error('Error users.csv:', err);
       return callback(null, false);
     }
@@ -92,7 +92,7 @@ app.get("/students", (req, res) => {
   
   //read the students.csv file
   fs.readFile("./students.csv", 'utf-8', (err, data) => {
-    //handle any errors reading the file
+    //see if there is error
     if (err) {
       console.error('Error students.csv:', err);
       return res.status(500).send('Error');
@@ -211,6 +211,7 @@ app.get("/api/students", (req, res) => {
   });
 });
 
+//create a student who will be stored in the database mongoose
 app.post('/students/create-in-db', async (req, res) => {
   try {
     const { name, school } = req.body;
@@ -310,7 +311,7 @@ app.post('/students/:id', (req, res) => {
     //write the updated CSV 
     fs.writeFile('./students.csv', updatedCSV, (err) => {
       if (err) {
-        // Handle errors writing to the file
+        //see if there is error
         console.error('error students.csv:', err);
         return res.status(500).send('error');
       }
